@@ -59,6 +59,7 @@ public class WebController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ResponseEntity<String> delete(@RequestParam String key) {
+        System.out.println(key);
         redisRepository.delete(key);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -16,6 +16,8 @@ public class Movie implements Serializable {
     private String category;
     private Integer ticketPrice;
 
+    public Movie(){}
+
     public Movie(String id, String hallName, String movieTitle, String date, String time, String category, Integer ticketPrice) {
         this.id = id;
         this.hallName = hallName;

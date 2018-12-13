@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {Grid, Card, Button, Typography} from '@material-ui/core';
 import axios from 'axios';
-import { withStyles, createMuiTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import purple from '@material-ui/core/colors/purple';
 import green from '@material-ui/core/colors/green';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -73,7 +72,7 @@ class MyForm extends Component {
     return (
         <Grid container className={classes.container}>
             <form>
-                <FormControl className={classes.formControl}>
+                <FormControl required className={classes.formControl}>
                     <InputLabel htmlFor="hallName">Hall name</InputLabel>
                     <Select
                         value={this.state.hallName}
@@ -81,7 +80,7 @@ class MyForm extends Component {
                         inputProps={{
                         name: 'hallName',
                         id: 'hallName',
-                        }}
+                        }} 
                     >
                         <MenuItem value={10}>Ten</MenuItem>
                         <MenuItem value={20}>Twenty</MenuItem>
@@ -90,16 +89,17 @@ class MyForm extends Component {
                 </FormControl>
                 <br />
                 <TextField
-                 id="outlined-uncontrolled"
+                    id="outlined-uncontrolled"
                     name="movieTitle"
                     label="Movie title"
                     value={this.state.firstName}
                     onChange={e => this.change(e)}
                     className={classes.textField}
                     variant="outlined"
+                    required
                 />
                 <br />
-                <FormControl className={classes.formControl}>
+                <FormControl required className={classes.formControl}>
                     <InputLabel htmlFor="category">Category</InputLabel>
                     <Select
                         value={this.state.category}

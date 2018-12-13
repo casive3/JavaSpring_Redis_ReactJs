@@ -15,6 +15,7 @@ import redis.repository.RedisRepository;
 @Controller
 @CrossOrigin
 @RequestMapping("/")
+@ResponseStatus(HttpStatus.OK)
 public class WebController {
     
     @Autowired

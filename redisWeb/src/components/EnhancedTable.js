@@ -66,7 +66,7 @@ let EnhancedTableToolbar = props => {
             {numSelected} selected
           </Typography>
         ) : (
-          <Typography variant="h6" id="tableTitle">
+          <Typography variant="display2" id="tableTitle">
             Movies
           </Typography>
         )}

@@ -13,16 +13,26 @@ class BuyTickets extends Component {
         };
     }
 
-  componentDidMount() {
-    // axios.get(`https://jsonplaceholder.typicode.com/users`)
+  componentDidUpdate() {
     axios.get(`http://localhost:8090/keys`, {headers: {
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
     }})
     .then(res => {
-      const movies = res.data;
+      let movies = res.data;
       console.log(movies)
+      Object.keys(movies).forEach(function(key,index) {
+        console.log("ben")
+        console.log(key)
+        console.log(index)
+      })
+      movies.map(e=>console.log(e))
       this.setState({ movies });
+      for (var key in movies) {
+        if (movies.hasOwnProperty(key)) {
+            console.log(key + " -> " + movies[key]);
+        }
+    }
     })
   }
   
@@ -38,12 +48,12 @@ class BuyTickets extends Component {
 
     return (
         <Grid container className={classes.main}>
-            <Grid container>
+            {/* <Grid container>
                 <EnhancedTable/>
             </Grid>
             <Grid container>
                 {movies !==null ? this.meghiv(movies) :'Not found movies'}
-            </Grid>
+            </Grid> */}
         </Grid>
     );
 }}

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import redis.model.Movie;
 
+import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 
@@ -39,13 +40,6 @@ public class RedisRepositoryImpl implements RedisRepository {
     }
     
     public void add(final Movie movie) {
-        System.out.println("itt iss van");
-        System.out.println(movie.getId());
-        System.out.println(movie.getMovieTitle());
-        System.out.println(hashOperations.entries(KEY));
-//        redisTemplate.opsForList().leftPush("queue#tasks", "firstTask");
-//        redisTemplate.opsForList().leftPush("queue#tasks", "second");
-//        JSONObject jMovie = new JSONObject(movie);
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = null;
         try {
@@ -54,7 +48,7 @@ public class RedisRepositoryImpl implements RedisRepository {
             e.printStackTrace();
         }
         System.out.println(jsonInString);
-        hashOperations.put(KEY, "movie1",jsonInString);
+        hashOperations.put(KEY, movie.getId(), jsonInString);
     }
 
     public void delete(final String id) {
@@ -68,8 +62,6 @@ public class RedisRepositoryImpl implements RedisRepository {
     public Map<Object, Object> findAllMovies(){
 //        System.out.println(hashOperations.entries(KEY));
 //        System.out.println(hashOperations.entries(KEY).get("kulcs"));
-        System.out.println(listOperations.leftPop("queue#tasks"));
-        System.out.println(listOperations.leftPop("queue#tasks"));
         return hashOperations.entries(KEY);
     }
 

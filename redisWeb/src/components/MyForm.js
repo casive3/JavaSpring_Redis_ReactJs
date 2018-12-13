@@ -33,22 +33,22 @@ class MyForm extends Component {
     onSubmit = e => {
         e.preventDefault();
         this.props.onSubmit();
-        this.setState({
-            hallName: "",
-            ticketPrice: "",
-            movieTitle: "",
-            category:"",
-            date:"2018-12-12",
-            time:"07:30"
-        });
-        this.props.onChange({
-            hallName: "",
-            ticketPrice: "",
-            movieTitle: "",
-            category:"",
-            date:"2018-12-12",
-            time:"07:30"
-        });
+        // this.setState({
+        //     hallName: "",
+        //     ticketPrice: "",
+        //     movieTitle: "",
+        //     category:"",
+        //     date:"2018-12-12",
+        //     time:"07:30"
+        // });
+        // this.props.onChange({
+        //     hallName: "",
+        //     ticketPrice: "",
+        //     movieTitle: "",
+        //     category:"",
+        //     date:"2018-12-12",
+        //     time:"07:30"
+        // });
     };
 
 //   componentDidMount() {
@@ -82,9 +82,9 @@ class MyForm extends Component {
                         id: 'hallName',
                         }} 
                     >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                        <MenuItem value={'Ten'}>Ten</MenuItem>
+                        <MenuItem value={'Twenty'}>Twenty</MenuItem>
+                        <MenuItem value={'Thirty'}>Thirty</MenuItem>
                     </Select>
                 </FormControl>
                 <br />
@@ -99,7 +99,7 @@ class MyForm extends Component {
                     required
                 />
                 <br />
-                <FormControl required className={classes.formControl}>
+                <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="category">Category</InputLabel>
                     <Select
                         value={this.state.category}
@@ -109,10 +109,10 @@ class MyForm extends Component {
                         id: 'category',
                         }}
                     >
-                        <MenuItem value={10}>Comedy</MenuItem>
-                        <MenuItem value={20}>Action</MenuItem>
-                        <MenuItem value={30}>Horror</MenuItem>
-                        <MenuItem value={40}>Drama</MenuItem>
+                        <MenuItem value={'Comedy'}>Comedy</MenuItem>
+                        <MenuItem value={'Action'}>Action</MenuItem>
+                        <MenuItem value={'Horror'}>Horror</MenuItem>
+                        <MenuItem value={'Drama'}>Drama</MenuItem>
                     </Select>
                 </FormControl>
                 <br />
@@ -122,6 +122,7 @@ class MyForm extends Component {
                     value={this.state.ticketPrice}
                     onChange={e => this.change(e)}
                     className={classes.textField}
+                    required
                 />
                 <br />
                 <TextField
@@ -151,7 +152,7 @@ class MyForm extends Component {
                     }}
                 />
                 <br />
-                <Button variant="contained" color="primary" label="Submit" className={classes.button} onClick={e => this.onSubmit(e)} >
+                <Button type='submit' variant="contained" color="primary" label="Submit" className={classes.button} onClick={e => this.onSubmit(e)} >
                     Submit
                 </Button>
             </form>
@@ -169,11 +170,12 @@ const styles = theme => ({
     },
     textField: {    
         padding: 8,
-        margin: 12
+        margin: 12,
+        width: 180
       },
       formControl: {
         margin: 12,
-        minWidth: 120,
+        minWidth: 180,
       },
       button:{
 

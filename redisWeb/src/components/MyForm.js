@@ -19,8 +19,8 @@ class MyForm extends Component {
             ticketPrice: "",
             movieTitle: "",
             category:"",
-            date:"",
-            time:""
+            date:"2018-12-12",
+            time:"07:30"
         };
     }
     
@@ -38,17 +38,17 @@ class MyForm extends Component {
             hallName: "",
             ticketPrice: "",
             movieTitle: "",
-            date:"",
             category:"",
-            time:""
+            date:"2018-12-12",
+            time:"07:30"
         });
         this.props.onChange({
             hallName: "",
             ticketPrice: "",
             movieTitle: "",
             category:"",
-            date:"",
-            time:""
+            date:"2018-12-12",
+            time:"07:30"
         });
     };
 
@@ -68,6 +68,7 @@ class MyForm extends Component {
 
   render() {
     const { classes } = this.props;
+    const { date, time } = this.state;
 
     return (
         <Grid container className={classes.container}>
@@ -127,8 +128,7 @@ class MyForm extends Component {
                     id="date"
                     label="Date"
                     type="date"
-                    // value={this.state.date}
-                    defaultValue="2018-12-12"
+                    defaultValue={date}
                     className={classes.textField}
                     onChange={e => this.change(e)}
                     InputLabelProps={{
@@ -140,8 +140,7 @@ class MyForm extends Component {
                     id="time"
                     label="Starting time"
                     type="time"
-                    defaultValue="07:30"
-                    // value={this.state.time}
+                    defaultValue={time}
                     onChange={e => this.change(e)}
                     className={classes.textField}
                     InputLabelProps={{

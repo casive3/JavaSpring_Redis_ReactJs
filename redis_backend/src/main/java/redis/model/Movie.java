@@ -1,5 +1,7 @@
 package redis.model;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 public class Movie implements Serializable {

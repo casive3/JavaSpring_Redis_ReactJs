@@ -1,5 +1,8 @@
 package redis.repository;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
@@ -40,9 +43,18 @@ public class RedisRepositoryImpl implements RedisRepository {
         System.out.println(movie.getId());
         System.out.println(movie.getMovieTitle());
         System.out.println(hashOperations.entries(KEY));
-        redisTemplate.opsForList().leftPush("queue#tasks", "firstTask");
-        redisTemplate.opsForList().leftPush("queue#tasks", "second");
-//        hashOperations.put(KEY, "movieTitle", movie.getMovieTitle());
+//        redisTemplate.opsForList().leftPush("queue#tasks", "firstTask");
+//        redisTemplate.opsForList().leftPush("queue#tasks", "second");
+//        JSONObject jMovie = new JSONObject(movie);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = null;
+        try {
+            jsonInString = mapper.writeValueAsString(movie);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        System.out.println(jsonInString);
+        hashOperations.put(KEY, "movie1",jsonInString);
     }
 
     public void delete(final String id) {

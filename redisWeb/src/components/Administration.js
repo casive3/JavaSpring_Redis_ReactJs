@@ -1,28 +1,28 @@
 import React, { Component } from "react";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 import "../App.css";
 import MyForm from "./MyForm";
-import axios from 'axios';
-import { withStyles } from '@material-ui/core/styles';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import green from '@material-ui/core/colors/green';
-import amber from '@material-ui/core/colors/amber';
-import WarningIcon from '@material-ui/icons/Warning';
+import axios from "axios";
+import { withStyles } from "@material-ui/core/styles";
+import Snackbar from "@material-ui/core/Snackbar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import classNames from "classnames";
+import Button from "@material-ui/core/Button";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import ErrorIcon from "@material-ui/icons/Error";
+import InfoIcon from "@material-ui/icons/Info";
+import green from "@material-ui/core/colors/green";
+import amber from "@material-ui/core/colors/amber";
+import WarningIcon from "@material-ui/icons/Warning";
 
 const variantIcon = {
   success: CheckCircleIcon,
   warning: WarningIcon,
   error: ErrorIcon,
-  info: InfoIcon,
+  info: InfoIcon
 };
 
 function MySnackbarContent(props) {
@@ -48,7 +48,7 @@ function MySnackbarContent(props) {
           onClick={onClose}
         >
           <CloseIcon className={classes.icon} />
-        </IconButton>,
+        </IconButton>
       ]}
       {...other}
     />
@@ -57,28 +57,28 @@ function MySnackbarContent(props) {
 
 const styles1 = theme => ({
   success: {
-    backgroundColor: green[600],
+    backgroundColor: green[600]
   },
   error: {
-    backgroundColor: theme.palette.error.dark,
+    backgroundColor: theme.palette.error.dark
   },
   info: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.dark
   },
   warning: {
-    backgroundColor: amber[700],
+    backgroundColor: amber[700]
   },
   icon: {
-    fontSize: 20,
+    fontSize: 20
   },
   iconVariant: {
     opacity: 0.9,
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing.unit
   },
   message: {
-    display: 'flex',
-    alignItems: 'center',
-  },
+    display: "flex",
+    alignItems: "center"
+  }
 });
 
 const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
@@ -86,7 +86,7 @@ const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
 class Administration extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       fields: {},
       openSuccess: false,
       openError: false
@@ -103,55 +103,62 @@ class Administration extends Component {
     });
   };
   onSubmit = () => {
-      axios.post(`http://localhost:8091/add`, {id: Math.random().toString(36).substr(2, 9), ...this.state.fields})
+    axios
+      .post(`http://localhost:8090/add`, {
+        id: Math.random()
+          .toString(36)
+          .substr(2, 9),
+        ...this.state.fields
+      })
       .then(res => {
-        res.status === 200 ? 
-          this.setState({openSuccess :true}) :
-          this.setState({openError :true})
+        res.status === 200
+          ? this.setState({ openSuccess: true })
+          : this.setState({ openError: true });
       })
       .catch(error => {
-        console.log(error.response)
-        this.setState({openError :true});
-    });
-  }
+        console.log(error.response);
+        this.setState({ openError: true });
+      });
+  };
 
   render() {
-    const {classes} = this.props;
-    const {openError, openSuccess} = this.state;
+    const { classes } = this.props;
+    const { openError, openSuccess } = this.state;
     return (
       <MuiThemeProvider>
         <div className="App">
-          <MyForm onChange={fields => this.onChange(fields)} onSubmit={this.onSubmit.bind(this)} />
-          <p>
-            {JSON.stringify(this.state.fields, null, 2)}
-          </p>
+          <MyForm
+            onChange={fields => this.onChange(fields)}
+            onSubmit={this.onSubmit.bind(this)}
+          />
+          <p>{JSON.stringify(this.state.fields, null, 2)}</p>
           <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          open={openSuccess}
-          autoHideDuration={600}
-        >
-         <MySnackbarContentWrapper
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center"
+            }}
+            open={openSuccess}
+            autoHideDuration={600}
+          >
+            <MySnackbarContentWrapper
               variant="success"
               message="Created new Movie successfully"
-            /> 
-        </Snackbar>
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          open={openError}
-          autoHideDuration={600}
-       >
-             <MySnackbarContentWrapper
-            variant="error"
-            className={classes.margin}
-            message="Something went wrong"
-          /> 
-        </Snackbar>
+            />
+          </Snackbar>
+          <Snackbar
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center"
+            }}
+            open={openError}
+            autoHideDuration={600}
+          >
+            <MySnackbarContentWrapper
+              variant="error"
+              className={classes.margin}
+              message="Something went wrong"
+            />
+          </Snackbar>
         </div>
       </MuiThemeProvider>
     );
@@ -160,8 +167,8 @@ class Administration extends Component {
 
 const styles2 = theme => ({
   margin: {
-    margin: theme.spacing.unit,
-  },
+    margin: theme.spacing.unit
+  }
 });
 
 export default withStyles(styles2)(Administration);

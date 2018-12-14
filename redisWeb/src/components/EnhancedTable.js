@@ -19,12 +19,6 @@ import { lighten } from "@material-ui/core/styles/colorManipulator";
 import EnhancedTableHead from "./EnhancedTableHead";
 import axios from "axios";
 
-let counter = 0;
-function createData(name, calories, fat, carbs, protein) {
-  counter += 1;
-  return { id: counter, name, calories, fat, carbs, protein };
-}
-
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -148,37 +142,40 @@ class EnhancedTable extends React.Component {
     order: "asc",
     orderBy: "calories",
     selected: [],
-    data: [
-      // createData('Cupcake', 305, 3.7, 67, 4.3),
-      // createData('Donut', 452, 25.0, 51, 4.9),
-      // createData('Eclair', 262, 16.0, 24, 6.0),
-      // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-      // createData('Gingerbread', 356, 16.0, 49, 3.9),
-      // createData('Honeycomb', 408, 3.2, 87, 6.5),
-      // createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-      // createData('Jelly Bean', 375, 0.0, 94, 0.0),
-      // createData('KitKat', 518, 26.0, 65, 7.0),
-      // createData('Lollipop', 392, 0.2, 98, 0.0),
-      // createData('Marshmallow', 318, 0, 81, 2.0),
-      // createData('Nougat', 360, 19.0, 9, 37.0),
-      // createData('Oreo', 437, 18.0, 63, 4.0),
-    ],
+    data: [],
+    movies: [],
     page: 0,
     rowsPerPage: 5
   };
 
   componentDidMount() {
+    var ezaz = [];
     axios
-      .get(`http://localhost:8091/keys`, {
+      .get(`http://localhost:8090/keys`, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json"
         }
       })
       .then(res => {
-        const data = res.data;
-        console.log(data);
-        // this.setState({ data });
+        var movies = res.data;
+        Object.keys(movies).forEach(function(key, index) {
+          console.log("ben");
+          console.log(key);
+          console.log(index);
+          ezaz.push(JSON.parse(movies[key]));
+        });
+        console.log("itt");
+        this.setState({ movies });
+        // for (var key in movies) {
+        //   if (movies.hasOwnProperty(key)) {
+        //     console.log(key + " -> " + movies[key]);
+        //   }
+        // }
+        console.log("data:=-======", this.state.data);
+        // const peopleArray = Object.keys(ezaz).map(i => ezaz[i]);
+        this.setState({ data: ezaz });
+        console.log("people:", ezaz);
       });
   }
 
@@ -266,16 +263,17 @@ class EnhancedTable extends React.Component {
                       key={n.id}
                       selected={isSelected}
                     >
-                      <TableCell padding="checkbox">
+                      <TableCell padding="checkbox" value={n.id}>
                         <Checkbox checked={isSelected} />
                       </TableCell>
                       <TableCell component="th" scope="row" padding="none">
-                        {n.name}
+                        {n.movieTitle}
                       </TableCell>
-                      <TableCell numeric>{n.calories}</TableCell>
-                      <TableCell numeric>{n.fat}</TableCell>
-                      <TableCell numeric>{n.carbs}</TableCell>
-                      <TableCell numeric>{n.protein}</TableCell>
+                      <TableCell>{n.hallName}</TableCell>
+                      <TableCell>{n.category}</TableCell>
+                      <TableCell numeric>{n.ticketPrice}</TableCell>
+                      <TableCell>{n.date}</TableCell>
+                      <TableCell>{n.time}</TableCell>
                     </TableRow>
                   );
                 })}

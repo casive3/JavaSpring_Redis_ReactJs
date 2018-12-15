@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import { withStyles } from "@material-ui/core/styles";
-import { AppBar, Grid, Card, Tab, Tabs, NoSsr } from "@material-ui/core";
-import axios from "axios";
+import { AppBar, Grid, Tab, Tabs, NoSsr } from "@material-ui/core";
 import Administration from "./components/Administration";
 import BuyTickets from "./components/BuyTickets";
 import Contacts from "./components/Contacts";
@@ -28,7 +27,7 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
-    const { movies, value } = this.state;
+    const { value } = this.state;
 
     return (
       <NoSsr>

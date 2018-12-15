@@ -3,6 +3,7 @@ package redis.model;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Movie implements Serializable {
     

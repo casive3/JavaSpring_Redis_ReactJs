@@ -15,15 +15,15 @@ const rows = [
     label: "Movie title"
   },
   { id: "hallName", numeric: false, disablePadding: true, label: "Hall name" },
-  { id: "category", numeric: true, disablePadding: false, label: "Category" },
+  { id: "category", numeric: false, disablePadding: false, label: "Category" },
   {
     id: "ticketPrice",
     numeric: true,
     disablePadding: false,
     label: "Ticket Price"
   },
-  { id: "date", numeric: true, disablePadding: false, label: "Date" },
-  { id: "time", numeric: true, disablePadding: false, label: "Time" }
+  { id: "date", numeric: false, disablePadding: false, label: "Date" },
+  { id: "time", numeric: false, disablePadding: false, label: "Time" }
 ];
 
 class EnhancedTableHead extends React.Component {

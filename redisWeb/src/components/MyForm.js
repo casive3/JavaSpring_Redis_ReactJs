@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {Grid, Card, Button, Typography} from '@material-ui/core';
-import axios from 'axios';
+import {Grid,  Button} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import green from '@material-ui/core/colors/green';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
@@ -18,7 +15,7 @@ class MyForm extends Component {
             ticketPrice: "",
             movieTitle: "",
             category:"",
-            date:"2018-12-12",
+            date:"2018-12-17",
             time:"07:30"
         };
     }
@@ -33,37 +30,7 @@ class MyForm extends Component {
     onSubmit = e => {
         e.preventDefault();
         this.props.onSubmit();
-        // this.setState({
-        //     hallName: "",
-        //     ticketPrice: "",
-        //     movieTitle: "",
-        //     category:"",
-        //     date:"2018-12-12",
-        //     time:"07:30"
-        // });
-        // this.props.onChange({
-        //     hallName: "",
-        //     ticketPrice: "",
-        //     movieTitle: "",
-        //     category:"",
-        //     date:"2018-12-12",
-        //     time:"07:30"
-        // });
     };
-
-//   componentDidMount() {
-//     // axios.get(`https://jsonplaceholder.typicode.com/users`)
-//     axios.get(`http://localhost:8090/keys`, {headers: {
-//       'Access-Control-Allow-Origin': '*',
-//       'Content-Type': 'application/json',
-//     }})
-//     .then(res => {
-//       const movies = res.data;
-//       console.log(movies)
-//       this.setState({ movies });
-//     })
-//   }
-  
 
   render() {
     const { classes } = this.props;
@@ -72,22 +39,6 @@ class MyForm extends Component {
     return (
         <Grid container className={classes.container}>
             <form>
-                <FormControl required className={classes.formControl}>
-                    <InputLabel htmlFor="hallName">Hall name</InputLabel>
-                    <Select
-                        value={this.state.hallName}
-                        onChange={e => this.change(e)}
-                        inputProps={{
-                        name: 'hallName',
-                        id: 'hallName',
-                        }} 
-                    >
-                        <MenuItem value={'Ten'}>Ten</MenuItem>
-                        <MenuItem value={'Twenty'}>Twenty</MenuItem>
-                        <MenuItem value={'Thirty'}>Thirty</MenuItem>
-                    </Select>
-                </FormControl>
-                <br />
                 <TextField
                     id="outlined-uncontrolled"
                     name="movieTitle"
@@ -98,6 +49,22 @@ class MyForm extends Component {
                     variant="outlined"
                     required
                 />
+                <br />
+                <FormControl required className={classes.formControl}>
+                    <InputLabel htmlFor="hallName">Hall name</InputLabel>
+                    <Select
+                        value={this.state.hallName}
+                        onChange={e => this.change(e)}
+                        inputProps={{
+                        name: 'hallName',
+                        id: 'hallName',
+                        }} 
+                    >
+                        <MenuItem value={'L03'}>L03</MenuItem>
+                        <MenuItem value={'C12'}>C12</MenuItem>
+                        <MenuItem value={'B24'}>B24</MenuItem>
+                    </Select>
+                </FormControl>
                 <br />
                 <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="category">Category</InputLabel>
@@ -126,10 +93,11 @@ class MyForm extends Component {
                 />
                 <br />
                 <TextField
-                    id="date"
+                    name="date"
                     label="Date"
                     type="date"
                     defaultValue={date}
+                    value={date}
                     className={classes.textField}
                     onChange={e => this.change(e)}
                     InputLabelProps={{
@@ -138,10 +106,11 @@ class MyForm extends Component {
                 />
                 <br />
                 <TextField
-                    id="time"
+                    name="time"
                     label="Starting time"
                     type="time"
                     defaultValue={time}
+                    value={time}
                     onChange={e => this.change(e)}
                     className={classes.textField}
                     InputLabelProps={{
@@ -176,9 +145,6 @@ const styles = theme => ({
       formControl: {
         margin: 12,
         minWidth: 180,
-      },
-      button:{
-
       }
 })
 

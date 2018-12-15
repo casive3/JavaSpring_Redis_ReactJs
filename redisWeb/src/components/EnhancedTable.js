@@ -1,5 +1,4 @@
 import React from "react";
-import classNames from "classnames";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -7,17 +6,11 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-import { Delete, Payment } from "@material-ui/icons";
-import FilterListIcon from "@material-ui/icons/FilterList";
-import { lighten } from "@material-ui/core/styles/colorManipulator";
 import EnhancedTableHead from "./EnhancedTableHead";
 import axios from "axios";
+import EnhancedTableToolbar from "./EnhancedTableToolbar"
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -45,102 +38,12 @@ function getSorting(order, orderBy) {
     : (a, b) => -desc(a, b, orderBy);
 }
 
-let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
 
-  return (
-    <Toolbar
-      className={classNames(classes.root, {
-        [classes.highlight]: numSelected > 0
-      })}
-    >
-      <div className={classes.title}>
-        {numSelected > 0 ? (
-          <Typography color="inherit" variant="subtitle1">
-            {numSelected} selected
-          </Typography>
-        ) : (
-          <Typography variant="display2" id="tableTitle">
-            Movies
-          </Typography>
-        )}
-      </div>
-      <div className={classes.spacer} />
-      <div className={classes.actions}>
-        {numSelected > 0 ? (
-          <div>
-            <Tooltip title="Delete">
-              <IconButton>
-                <Delete />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Buy">
-              <IconButton>
-                <Payment />
-              </IconButton>
-            </Tooltip>
-          </div>
-        ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-      </div>
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired
-};
-
-const toolbarStyles = theme => ({
-  root: {
-    paddingRight: theme.spacing.unit
-  },
-  highlight:
-    theme.palette.type === "light"
-      ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85)
-        }
-      : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark
-        },
-  spacer: {
-    flex: "1 1 100%"
-  },
-  actions: {
-    color: theme.palette.text.secondary
-  },
-  title: {
-    flex: "0 0 auto"
-  }
-});
-
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
-
-const styles = theme => ({
-  root: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 3
-  },
-  table: {
-    minWidth: 1020
-  },
-  tableWrapper: {
-    overflowX: "auto"
-  }
-});
 
 class EnhancedTable extends React.Component {
   state = {
     order: "asc",
-    orderBy: "calories",
+    orderBy: "ticketPrice",
     selected: [],
     data: [],
     movies: [],
@@ -148,8 +51,8 @@ class EnhancedTable extends React.Component {
     rowsPerPage: 5
   };
 
-  componentDidMount() {
-    var ezaz = [];
+  initTable() {
+    var tempData = [];
     axios
       .get(`http://localhost:8090/keys`, {
         headers: {
@@ -160,23 +63,14 @@ class EnhancedTable extends React.Component {
       .then(res => {
         var movies = res.data;
         Object.keys(movies).forEach(function(key, index) {
-          console.log("ben");
-          console.log(key);
-          console.log(index);
-          ezaz.push(JSON.parse(movies[key]));
+          tempData.push(JSON.parse(movies[key]));
         });
-        console.log("itt");
-        this.setState({ movies });
-        // for (var key in movies) {
-        //   if (movies.hasOwnProperty(key)) {
-        //     console.log(key + " -> " + movies[key]);
-        //   }
-        // }
-        console.log("data:=-======", this.state.data);
-        // const peopleArray = Object.keys(ezaz).map(i => ezaz[i]);
-        this.setState({ data: ezaz });
-        console.log("people:", ezaz);
+        this.setState({ data: tempData, selected: [] });
       });
+  }
+
+  componentDidMount() {
+   this.initTable();
   }
 
   handleRequestSort = (event, property) => {
@@ -234,10 +128,9 @@ class EnhancedTable extends React.Component {
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} selected={selected} reInitTable={() => this.initTable()}/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -308,5 +201,19 @@ class EnhancedTable extends React.Component {
 EnhancedTable.propTypes = {
   classes: PropTypes.object.isRequired
 };
+
+  
+const styles = theme => ({
+  root: {
+    width: "100%",
+    marginTop: theme.spacing.unit * 3
+  },
+  table: {
+    minWidth: 1020
+  },
+  tableWrapper: {
+    overflowX: "auto"
+  }
+});
 
 export default withStyles(styles)(EnhancedTable);

@@ -1,10 +1,10 @@
-package redis.repository;
+package redis.domain.repository;
 
 import java.util.Map;
 
 import redis.model.Movie;
 
-public interface RedisRepository {
+public interface MovieRepository {
 
     /**
      * Return all movies
@@ -19,7 +19,7 @@ public interface RedisRepository {
     /**
      * Delete a key-value pair in Redis.
      */
-    void delete(String id);
+    boolean delete(String id);
     
     /**
      * find a movie

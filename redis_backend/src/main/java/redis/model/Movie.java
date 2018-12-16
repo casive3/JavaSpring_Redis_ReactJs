@@ -1,6 +1,9 @@
 package redis.model;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class Movie implements Serializable {
     
@@ -15,6 +18,8 @@ public class Movie implements Serializable {
     private String time;
     private String category;
     private Integer ticketPrice;
+
+    public Movie(){}
 
     public Movie(String id, String hallName, String movieTitle, String date, String time, String category, Integer ticketPrice) {
         this.id = id;

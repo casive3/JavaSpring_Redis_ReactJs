@@ -21,10 +21,10 @@ public class RedisConfig {
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
         JedisConnectionFactory factory = new JedisConnectionFactory();
-//        factory.setHostName("redis-11313.c83.us-east-1-2.ec2.cloud.redislabs.com");
-//        factory.setPort(11313);
-//        factory.setPassword("dusb9TP4N6ka9hswNhVssegaiDWTobCC");
-//        factory.setUsePool(true);
+        factory.setHostName("redis-11313.c83.us-east-1-2.ec2.cloud.redislabs.com");
+        factory.setPort(11313);
+        factory.setPassword("dusb9TP4N6ka9hswNhVssegaiDWTobCC");
+        factory.setUsePool(true);
         return factory;
     }
 
